@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vue Formulaire Réclamation -->
+    <record model="ir.ui.view" id="reclamation_form_view">
+        <field name="name">reclamation.form</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <form string="Réclamation">
+                <sheet>
+                    <!-- Informations principales -->
+                    <group>
+                        <field name="name" required="1" readonly="status not in ['pending']"/>
+                        <field name="date" required="1" readonly="status not in ['pending']"/>
+                        <field name="objet" required="1" readonly="status not in ['pending']"/>
+                        <field name="description" required="1" readonly="status not in ['pending']"/>
+                        <field name="justification_file" readonly="status not in ['pending']"/>
+                    </group>
+
+                    <!-- Origine de la Réclamation -->
+                    <group string="Origine de la Réclamation">
+                        <field name="origin" required="1" readonly="status not in ['pending']"/>
+                    </group>
+
+                    <!-- Informations Entreprise -->
+                    <group invisible="origin != 'entreprise'">
+                        <group string="Informations Entreprise">
+                            <field name="company_name" required="1" readonly="status not in ['pending']"/>
+                            <field name="company_address" readonly="status not in ['pending']"/>
+                            <field name="company_phone" readonly="status not in ['pending']"/>
+                            <field name="company_email" readonly="status not in ['pending']"/>
+                            <field name="company_sector" readonly="status not in ['pending']"/>
+                        </group>
+                    </group>
+
+                    <!-- Informations Réclamant -->
+                    <group invisible="origin == 'cellule_veille'">
+                        <group string="Informations Réclamant">
+                            <field name="claimant_first_name" required="1" readonly="status not in ['pending']"/>
+                            <field name="claimant_last_name" required="1" readonly="status not in ['pending']"/>
+                            <field name="claimant_address" required="1" readonly="status not in ['pending']"/>
+                            <field name="claimant_city" required="1" readonly="status not in ['pending']"/>
+                        </group>
+                    </group>
+
+                    <!-- Agence et Traitement -->
+                    <group string="Agence et Traitement">
+                        <field name="agency_id" required="1" readonly="status not in ['pending']"/>
+                        <field name="urgency" readonly="status not in ['pending']"/>
+                        <field name="claim_type" required="1" readonly="status not in ['pending']"/>
+                        <field name="complexity" required="1" readonly="status not in ['pending']"/>
+                        <field name="severity" required="1" readonly="status not in ['pending']"/>
+                        <field name="status" readonly="status not in ['pending']"/>
+                        <field name="assigned_agent" readonly="status not in ['pending']"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Réclamation -->
+    <record model="ir.ui.view" id="reclamation_tree_view">
+        <field name="name">reclamation.tree</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <tree string="Réclamations">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="origin"/>
+                <field name="urgency"/>
+                <field name="claim_type"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Recherche Réclamation -->
+    <record model="ir.ui.view" id="reclamation_search_view">
+        <field name="name">reclamation.search</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <search string="Recherche Réclamations">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="origin"/>
+                <field name="claim_type"/>
+                <field name="urgency"/>
+                <field name="status"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action Liste Réclamation -->
+    <record model="ir.actions.act_window" id="reclamation_list_action">
+        <field name="name">Réclamations</field>
+        <field name="res_model">reclamationpgi.reclamation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créez votre première réclamation ici !
+            </p>
+        </field>
+    </record>
+
+    <!-- Vue Formulaire Agent -->
+    <record model="ir.ui.view" id="agent_form_view">
+        <field name="name">agent.form</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <form string="Agent">
+                <sheet>
+                    <group string="Informations de l'Agent">
+                        <field name="name" required="1"/>
+                        <field name="agency_id"/>
+                        <field name="role" required="1"/>
+                        <field name="department"/>
+                    </group>
+                    <group string="Détails">
+                        <field name="work_email"/>
+                        <field name="work_phone"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Agent -->
+    <record model="ir.ui.view" id="agent_tree_view">
+        <field name="name">agent.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Agents">
+                <field name="name"/>
+                <field name="role"/>
+                <field name="agency_id"/>
+                <field name="work_email"/>
+                <field name="work_phone"/>
+                <field name="department"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action Liste Agent -->
+    <record model="ir.actions.act_window" id="agent_list_action">
+        <field name="name">Agents</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Principal -->
+    <menuitem id="main_reclamationpgi_menu" name="Réclamation PGI"/>
+
+    <!-- Menu Gestion des Réclamations -->
+    <menuitem id="reclamation_menu" name="Gestion des Réclamations" parent="main_reclamationpgi_menu" action="reclamation_list_action"/>
+
+    <!-- Menu Contact Réclamants -->
+    <menuitem id="contact_reclamants_menu" name="Contact Réclamants" parent="main_reclamationpgi_menu"/>
+
+    <!-- Sous-menus pour Contact Réclamants -->
+    <menuitem id="reclamants_submenu" name="Réclamants" parent="contact_reclamants_menu"/>
+    <menuitem id="communication_submenu" name="Communication" parent="contact_reclamants_menu"/>
+
+    <!-- Menu Interventions -->
+    <menuitem id="interventions_menu" name="Interventions" parent="main_reclamationpgi_menu"/>
+
+    <!-- Sous-menus pour Interventions -->
+    <menuitem id="assignation_submenu" name="Assignation" parent="interventions_menu"/>
+    <menuitem id="intervention_submenu" name="Intervention" parent="interventions_menu"/>
+    <menuitem id="decisions_submenu" name="Décisions" parent="interventions_menu"/>
+
+    <!-- Menu Users and Groups -->
+    <menuitem id="users_groups_menu" name="Users and Groups" parent="main_reclamationpgi_menu"/>
+
+    <!-- Sous-menus pour Users and Groups -->
+    <menuitem id="users_reclamants_submenu" name="Réclamants" parent="users_groups_menu"/>
+    <menuitem id="users_agents_submenu" name="Agents" parent="users_groups_menu" action="agent_list_action"/>
+</odoo>

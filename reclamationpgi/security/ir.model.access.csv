@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+reclamation_manager,reclamation manager,model_reclamationpgi_reclamation,group_manager_1,1,1,1,1
+reclamation_read_all,reclamation all,model_reclamationpgi_reclamation,,1,0,0,0
+
