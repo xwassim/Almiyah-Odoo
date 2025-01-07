@@ -1,0 +1,60 @@
+<odoo>
+    <!-- Vue Formulaire Réclamant -->
+    <record model="ir.ui.view" id="reclamant_form_view">
+        <field name="name">reclamant.form</field>
+        <field name="model">reclamationpgi.reclamant</field>
+        <field name="arch" type="xml">
+            <form string="Réclamant">
+                <sheet>
+                    <group>
+                        <field name="type" />
+                    </group>
+                    <notebook>
+                        <!-- Page pour les individus -->
+                        <page string="Individu" invisible="type != 'individual'">
+                            <group>
+                                <field name="first_name" required="1"/>
+                                <field name="last_name" required="1"/>
+                                <field name="address" required="1"/>
+                                <field name="city" required="1"/>
+                            </group>
+                        </page>
+
+                        <!-- Page pour les entreprises -->
+                        <page string="Entreprise" invisible="type != 'enterprise'">
+                            <group>
+                                <field name="company_name" />
+                                <field name="company_address"/>
+                                <field name="company_phone"/>
+                                <field name="company_email"/>
+                                <field name="company_sector"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Réclamant -->
+    <record model="ir.ui.view" id="reclamant_tree_view">
+        <field name="name">reclamant.tree</field>
+        <field name="model">reclamationpgi.reclamant</field>
+        <field name="arch" type="xml">
+            <tree string="Réclamants">
+                <field name="type"/>
+                <field name="first_name" invisible="type != 'individual'"/>
+                <field name="last_name" invisible="type != 'individual'"/>
+                <field name="company_name" invisible="type != 'enterprise'"/>
+                <field name="company_sector" invisible="type != 'enterprise'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action Liste Réclamant -->
+    <record model="ir.actions.act_window" id="reclamant_list_action">
+        <field name="name">Réclamants</field>
+        <field name="res_model">reclamationpgi.reclamant</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

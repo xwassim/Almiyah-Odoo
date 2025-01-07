@@ -29,6 +29,7 @@
         'templates.xml',
         'views/reclamation.xml',
         'views/agent.xml',
+        'views/reclamant.xml',
         'views/menu.xml',
 	    'reports.xml',
     ],

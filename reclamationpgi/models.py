@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields , api 
 
 class Reclamation(models.Model):
     _name = 'reclamationpgi.reclamation'
@@ -12,7 +12,7 @@ class Reclamation(models.Model):
     justification_file = fields.Binary(string="Pièces Justificatives")
 
     # Agence
-    agency_id = fields.Char(string="Identifiant de l'Agence", required=True, help="Identifiant de l'agence associé à la réclamation")
+    agency_id = fields.Many2one('res.partner', string="Agence", required=True, help="Agence associée à la réclamation")
 
     # Origine de la réclamation
     origin = fields.Selection([
@@ -22,18 +22,7 @@ class Reclamation(models.Model):
     ], string="Origine de la Réclamation", required=True)
 
     # Informations sur le réclamant
-    claimant_id = fields.Char(string="Identifiant du Réclamant")
-    claimant_first_name = fields.Char(string="Prénom du Réclamant", required=True)
-    claimant_last_name = fields.Char(string="Nom du Réclamant", required=True)
-    claimant_address = fields.Text(string="Adresse du Réclamant", required=True)
-    claimant_city = fields.Char(string="Commune du Réclamant", required=True)
-
-    # Informations sur l'entreprise (le cas échéant)
-    company_name = fields.Char(string="Nom de l'Entreprise")
-    company_address = fields.Text(string="Adresse de l'Entreprise")
-    company_phone = fields.Char(string="Téléphone de l'Entreprise")
-    company_email = fields.Char(string="Email de l'Entreprise")
-    company_sector = fields.Char(string="Secteur d'Activité de l'Entreprise")
+    reclamant_id = fields.Many2one('reclamationpgi.reclamant', string="Réclamant")
 
     # Assignation de l'agent
     assigned_agent = fields.Many2one('res.users', string="Agent Assigné", 
@@ -51,18 +40,19 @@ class Reclamation(models.Model):
     claim_type = fields.Selection([
         ('commercial', 'Commerciale'),
         ('technical', 'Technique')
-    ], string="Type de Réclamation", required=True)
+    ], string="Type de Réclamation")
     complexity = fields.Selection([
         ('low', 'Faible'),
         ('medium', 'Moyenne'),
         ('high', 'Élevée')
-    ], string="Complexité", required=True)
+    ], string="Complexité")
     severity = fields.Selection([
         ('minor', 'Mineure'),
         ('major', 'Majeure'),
         ('critical', 'Critique')
-    ], string="Gravité", required=True)
-    class Agent(models.Model):
+    ], string="Gravité")
+
+class Agent(models.Model):
         _inherit = 'hr.employee'
 
      # Champs spécifiques pour un agent
@@ -81,3 +71,24 @@ class Reclamation(models.Model):
         ('technical', 'Technique')
     ], string="Departement agent", required=True)
 
+class Reclamant(models.Model):
+    _name = 'reclamationpgi.reclamant'
+    _description = "Informations sur le Réclamant"
+
+    type = fields.Selection([
+        ('individual', 'Individu'),
+        ('enterprise', 'Entreprise')
+    ], string="Type de Réclamant", required=True)
+
+    # Fields for Individuals
+    first_name = fields.Char(string="Prénom", states={'readonly': [('type', '!=', 'individual')]})
+    last_name = fields.Char(string="Nom", states={'readonly': [('type', '!=', 'individual')]})
+    address = fields.Text(string="Adresse", states={'readonly': [('type', '!=', 'individual')]})
+    city = fields.Char(string="Commune", states={'readonly': [('type', '!=', 'individual')]})
+
+    # Fields for Enterprises
+    company_name = fields.Char(string="Nom de l'Entreprise", states={'readonly': [('type', '!=', 'enterprise')]})
+    company_address = fields.Text(string="Adresse de l'Entreprise", states={'readonly': [('type', '!=', 'enterprise')]})
+    company_phone = fields.Char(string="Téléphone de l'Entreprise", states={'readonly': [('type', '!=', 'enterprise')]})
+    company_email = fields.Char(string="Email de l'Entreprise", states={'readonly': [('type', '!=', 'enterprise')]})
+    company_sector = fields.Char(string="Secteur d'Activité", states={'readonly': [('type', '!=', 'enterprise')]})

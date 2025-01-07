@@ -14,52 +14,48 @@
     <template id="report_reclamation_view">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <div class="page">
+                <div class="page" style="font-family: Arial, sans-serif; padding: 20px;">
                     <!-- En-tête -->
                     <div class="header" style="text-align: center; margin-bottom: 30px;">
-                        <h1 style="color: #0056b3;">Rapport de Reclamation</h1>
-                        <p style="font-size: 14px; color: #888;">Reference : <t t-esc="doc.name"/></p>
+                        <h1 style="color: #0056b3; font-size: 24px; margin-bottom: 10px;">Rapport de Réclamation</h1>
+                        <p style="font-size: 14px; color: #888;">Référence : <t t-esc="doc.name"/></p>
                     </div>
 
-                    <!-- Informations générales -->
-                    <div class="section" style="margin-bottom: 20px;">
-                        <h3 style="border-bottom: 1px solid #ccc;">Informations Generales</h3>
-                        <p><strong>Date de Réclamation :</strong> <t t-esc="doc.date or 'Non spécifiée'"/></p>
-                        <p><strong>Origine :</strong> <t t-esc="doc.origin or 'Non spécifiée'"/></p>
-                        <p><strong>Urgence :</strong> <t t-esc="'Oui' if doc.urgency else 'Non'"/></p>
-                        <p><strong>Type de Réclamation :</strong> <t t-esc="dict(doc._fields['claim_type'].selection).get(doc.claim_type, 'Non spécifiée')"/></p>
-                        <p><strong>Statut :</strong> <t t-esc="dict(doc._fields['status'].selection).get(doc.status, 'Non spécifié')"/></p>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="section" style="margin-bottom: 20px;">
-                        <h3 style="border-bottom: 1px solid #ccc;">Description</h3>
-                        <p><t t-esc="doc.description or 'Non spécifiée'"/></p>
-                    </div>
-
-                    <!-- Informations Réclamant ou Entreprise -->
-                    <div class="section" style="margin-bottom: 20px;">
-                        <h3 style="border-bottom: 1px solid #ccc;">Informations sur le Réclamant</h3>
-                        <t t-if="doc.origin == 'entreprise'">
-                            <p><strong>Nom de l'Entreprise :</strong> <t t-esc="doc.company_name or 'Non spécifiée'"/></p>
-                            <p><strong>Adresse :</strong> <t t-esc="doc.company_address or 'Non spécifiée'"/></p>
-                            <p><strong>Telephone :</strong> <t t-esc="doc.company_phone or 'Non spécifié'"/></p>
-                            <p><strong>Email :</strong> <t t-esc="doc.company_email or 'Non spécifié'"/></p>
-                            <p><strong>Secteur d'Activite :</strong> <t t-esc="doc.company_sector or 'Non spécifié'"/></p>
-                        </t>
-                        <t t-else="">
-                            <p><strong>Prenom :</strong> <t t-esc="doc.claimant_first_name or 'Non spécifié'"/></p>
-                            <p><strong>Nom :</strong> <t t-esc="doc.claimant_last_name or 'Non spécifié'"/></p>
-                            <p><strong>Adresse :</strong> <t t-esc="doc.claimant_address or 'Non spécifiée'"/></p>
-                            <p><strong>Commune :</strong> <t t-esc="doc.claimant_city or 'Non spécifiée'"/></p>
-                        </t>
-                    </div>
-
-                    <!-- Section Agence et Assignation -->
-                    <div class="section" style="margin-bottom: 20px;">
-                        <h3 style="border-bottom: 1px solid #ccc;">Agence et Assignation</h3>
-                        <p><strong>Agence Associee :</strong> <t t-esc="doc.agency_id or 'Non spécifiée'"/></p>
-                        <p><strong>Agent Assigne :</strong> <t t-esc="doc.assigned_agent.name or 'Non assigné'"/></p>
+                    <!-- Informations de base -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Informations de Base</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 30%;"><strong>Date de Réclamation :</strong></td>
+                                <td><t t-esc="doc.date or 'Non spécifiée'"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Objet :</strong></td>
+                                <td><t t-esc="doc.objet or 'Non spécifié'"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Origine :</strong></td>
+                                <td><t t-esc="dict(doc._fields['origin'].selection).get(doc.origin, 'Non spécifiée')"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Réclamant :</strong></td>
+                                <td>
+                                    <t t-if="doc.reclamant_id.type == 'individual'">
+                                        <t t-esc="doc.reclamant_id.first_name or ''"/> <t t-esc="doc.reclamant_id.last_name or ''"/>
+                                    </t>
+                                    <t t-elif="doc.reclamant_id.type == 'enterprise'">
+                                        <t t-esc="doc.reclamant_id.company_name or 'Non spécifié'"/>
+                                    </t>
+                                    <t t-else="">
+                                        Non spécifié
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agent Assigné :</strong></td>
+                                <td><t t-esc="doc.assigned_agent.name or 'Non assigné'"/></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </t>
