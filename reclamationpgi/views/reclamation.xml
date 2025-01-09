@@ -1,0 +1,93 @@
+<odoo>
+    <!-- Vue Formulaire Réclamation -->
+    <record model="ir.ui.view" id="reclamation_form_view">
+        <field name="name">reclamation.form</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <form string="Réclamation">
+                <sheet>
+                    <!-- Informations principales -->
+                    <group>
+                        <field name="name" required="1" readonly="status != 'pending'"/>
+                        <field name="date" required="1" readonly="status != 'pending'"/>
+                        <field name="objet" required="1" readonly="status != 'pending'"/>
+                        <field name="description" required="1" readonly="status != 'pending'"/>
+                        <field name="justification_file" readonly="status != 'pending'"/>
+                    </group>
+
+                    <!-- Origine e de la Réclamation -->
+                    <group string="Origine de la Réclamation">
+                        <field name="origin" readonly="status != 'pending'"/>
+                    </group>
+                    <!--  provenance de la Réclamation -->
+                    <group string="Provenance de la Réclamation">
+                        <field name="provenance" readonly="status != 'pending'"/>
+                    </group>
+
+
+                    <!-- Informations Réclamant -->
+                    <group string="Réclamant">
+                        <field name="reclamant_id" readonly="status != 'pending'"/>
+                    </group>
+
+                    <!-- Agence et Traitement -->
+                    <group string="Agence et Traitement">
+                        <field name="agency_id" readonly="status != 'pending'"/>
+                        <field name="urgency" readonly="status != 'pending'"/>
+                        <field name="claim_type" readonly="status != 'pending'"/>
+                        <field name="complexity" readonly="status != 'pending'"/>
+                        <field name="severity" readonly="status != 'pending'"/>
+                        <field name="status" readonly="status != 'pending'"/>
+                        <field name="assigned_agent" readonly="status != 'pending'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Réclamation -->
+    <record model="ir.ui.view" id="reclamation_tree_view">
+        <field name="name">reclamation.tree</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <tree string="Réclamations">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="objet"/>
+                <field name="provenance"/>
+                <field name="urgency"/>
+                <field name="claim_type"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Recherche Réclamation -->
+    <record model="ir.ui.view" id="reclamation_search_view">
+        <field name="name">reclamation.search</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <search string="Recherche Réclamations">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="origin"/>
+                <field name="claim_type"/>
+                <field name="urgency"/>
+                <field name="status"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action Liste Réclamation -->
+    <record model="ir.actions.act_window" id="reclamation_list_action">
+        <field name="name">Réclamations</field>
+        <field name="res_model">reclamationpgi.reclamation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créez votre première réclamation ici !
+            </p>
+        </field>
+    </record>
+
+</odoo>

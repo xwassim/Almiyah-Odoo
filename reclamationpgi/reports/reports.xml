@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Définition du rapport -->
+    <record id="report_reclamation" model="ir.actions.report">
+        <field name="name">Rapport de Réclamation</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_reclamation_view</field>
+        <field name="binding_model_id" ref="model_reclamationpgi_reclamation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Template du rapport -->
+    <template id="report_reclamation_view">
+        <t t-call="web.html_container" meta-charset="UTF-8">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: Arial, sans-serif; padding: 20px;">
+                    <!-- En-tête -->
+                    <div class="header" style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #0056b3; font-size: 24px; margin-bottom: 10px;">Rapport de Réclamation</h1>
+                        <p style="font-size: 14px; color: #888;">Référence : <t t-esc="doc.name"/>
+                        </p>
+                    </div>
+
+                    <!-- Informations de base -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Informations de Base</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 30%;">
+                                    <strong>Nom de la Reclamatiom :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;">
+                                    <strong>Date de Reclamation :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Objet :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.objet"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Origine du reclamant  :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="dict(doc._fields['origin'].selection).get(doc.origin, '')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Provenance de la Reclamation :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="dict(doc._fields['provenance'].selection).get(doc.provenance, '')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Reclamant :</strong>
+                                </td>
+                                <td>
+                                    <t t-if="doc.reclamant_id.type == 'individual'">
+                                        <t t-esc="doc.reclamant_id.reclamant_fname or ''"/>
+                                        <t t-esc="doc.reclamant_id.reclamant_lname or ''"/>
+                                        <t t-esc="doc.reclamant_id.reclamant_email or ''"/>
+                                        <t t-esc="doc.reclamant_id.reclamant_phone or ''"/>
+                                    </t>
+                                    <t t-elif="doc.reclamant_id.type == 'enterprise'">
+                                        <t t-esc="doc.reclamant_id.company_code or ''"/>
+                                    </t>
+                                    <t t-else="">
+                                        Non specifie
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Agent s'occupant de cette reclamation :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.assigned_agent.name or 'Aucun Agent'"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

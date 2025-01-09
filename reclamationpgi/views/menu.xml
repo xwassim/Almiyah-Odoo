@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menu Principal -->
+    <menuitem id="main_reclamationpgi_menu" name="Réclamation PGI"/>
+
+    <!-- Menu Gestion des Réclamations -->
+    <menuitem id="reclamation_menu" name="Gestion des Réclamations" parent="main_reclamationpgi_menu" action="reclamation_list_action"/>
+
+    <!-- Sous-menus pour Gestion des Réclamations -->
+    <menuitem id="reclamants_submenu" name="Réclamants" parent="reclamation_menu" action="reclamant_list_action"/>
+    <menuitem id="reclamations_submenu" name="Réclamations" parent="reclamation_menu" action="reclamation_list_action"/>
+
+    <!-- Menu Contact Réclamants -->
+    <menuitem id="contact_reclamants_menu" name="Contact Réclamants" parent="main_reclamationpgi_menu"/>
+
+    <!-- Sous-menus pour Contact Réclamants -->
+    <menuitem id="communication_submenu" name="Communication" parent="contact_reclamants_menu"/>
+
+    <!-- Menu Interventions -->
+    <menuitem id="interventions_menu" name="Interventions" parent="main_reclamationpgi_menu"/>
+
+    <!-- Sous-menus pour Interventions -->
+    <menuitem id="assignation_submenu" name="Assignation" parent="interventions_menu"/>
+    <menuitem id="intervention_submenu" name="Intervention" parent="interventions_menu"/>
+    <menuitem id="decisions_submenu" name="Décisions" parent="interventions_menu"/>
+
+    <!-- Menu Users and Groups -->
+    <menuitem id="users_groups_menu" name="Users and Groups" parent="main_reclamationpgi_menu"/>
+
+    <!-- Sous-menus pour Users and Groups -->
+    <menuitem id="users_agents_submenu" name="Agents" parent="users_groups_menu" action="agent_list_action"/>
+</odoo>
