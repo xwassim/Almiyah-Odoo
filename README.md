@@ -16,6 +16,6 @@ Major changes :
 4-Ajout de la fonctionnalite de Soumission de Reclamation via Le site Web 
 
 5-Pour assuerer le bon fonctionnement du module lors des tests merci de :
-=> Activer mode devloppeur => Acceder a l'utilisateur admin => lui attribuer le role reclamation manager (situer tout en bas) afin que vous puissiez creer des reclamations
-=>Verifier que vous possedez au moins Une Company (entreprise ) du nom de 'My Company' (le champs concerné portera plus tard le nom de notre agence )
-=> intaller le module Site Web , choisir un theme quelconque (le menu du site web devrait afficher la fonctionnalité : Nouvelle Reclamation)
+-1 Activer mode devloppeur => Acceder a l'utilisateur admin => lui attribuer le role reclamation manager (situer tout en bas) afin que vous puissiez creer des reclamations
+-2 Verifier que vous possedez au moins Une Company (entreprise ) du nom de 'My Company' (le champs concerné portera plus tard le nom de notre agence )
+-3 intaller le module Site Web , choisir un theme quelconque (le menu du site web devrait afficher la fonctionnalité : Nouvelle Reclamation)
