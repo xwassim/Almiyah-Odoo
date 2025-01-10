@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','hr'],
+    'depends': ['base','hr','website',],
 
     # always loaded
     'data': [
@@ -30,8 +30,9 @@
         'views/reclamation.xml',
         'views/agent.xml',
         'views/reclamant.xml',
+        'views/website_form.xml',
         'views/menu.xml',
-	    'reports.xml',
+	    'reports/reports.xml',
     ],
 
     # only loaded in demonstration mode

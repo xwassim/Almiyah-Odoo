@@ -13,6 +13,8 @@
                         <field name="objet" required="1" readonly="status != 'pending'"/>
                         <field name="description" required="1" readonly="status != 'pending'"/>
                         <field name="justification_file" readonly="status != 'pending'"/>
+                        <field name="has_justification" readonly="status != 'pending'"/>
+                        <field name="provenance"  readonly="status != 'pending'"/>
                     </group>
 
                     <!-- Origine de la Réclamation -->
@@ -29,9 +31,9 @@
                     <group string="Agence et Traitement">
                         <field name="agency_id" required="1" readonly="status != 'pending'"/>
                         <field name="urgency" readonly="status != 'pending'"/>
-                        <field name="claim_type" required="1" readonly="status != 'pending'"/>
-                        <field name="complexity" required="1" readonly="status != 'pending'"/>
-                        <field name="severity" required="1" readonly="status != 'pending'"/>
+                        <field name="claim_type"  readonly="status != 'pending'"/>
+                        <field name="complexity"  readonly="status != 'pending'"/>
+                        <field name="severity"  readonly="status != 'pending'"/>
                         <field name="status" readonly="status != 'pending'"/>
                         <field name="assigned_agent" readonly="status != 'pending'"/>
                     </group>
@@ -52,6 +54,7 @@
                 <field name="urgency"/>
                 <field name="claim_type"/>
                 <field name="status"/>
+                <field name="has_justification"/>
             </tree>
         </field>
     </record>
@@ -68,6 +71,7 @@
                 <field name="claim_type"/>
                 <field name="urgency"/>
                 <field name="status"/>
+                <field name="has_justification"/>
             </search>
         </field>
     </record>

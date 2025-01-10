@@ -13,15 +13,27 @@
                         <!-- Page pour les individus -->
                         <page string="Individu" invisible="type != 'individual'">
                             <group>
-                                <field name="first_name" required="1"/>
-                                <field name="last_name" required="1"/>
-                                <field name="address" required="1"/>
-                                <field name="city" required="1"/>
+                                <field name="reclamant_fname" required="1"/>
+                                <field name="reclamant_lname" required="1"/>
+                                <field name="reclamant_address" required="1"/>
+                                <field name="reclamant_city" required="1"/>
+                                <field name="reclamant_email" required="1"/>
+                                <field name="reclamant_phone" required="1"/>
+
                             </group>
                         </page>
 
                         <!-- Page pour les entreprises -->
                         <page string="Entreprise" invisible="type != 'enterprise'">
+                            <group>
+                                <field name="reclamant_fname" required="1"/>
+                                <field name="reclamant_lname" required="1"/>
+                                <field name="reclamant_address" required="1"/>
+                                <field name="reclamant_city" required="1"/>
+                                <field name="reclamant_email" required="1"/>
+                                <field name="reclamant_phone" required="1"/>
+
+                            </group>
                             <group>
                                 <field name="company_name" />
                                 <field name="company_address"/>
@@ -43,10 +55,10 @@
         <field name="arch" type="xml">
             <tree string="Réclamants">
                 <field name="type"/>
-                <field name="first_name" invisible="type != 'individual'"/>
-                <field name="last_name" invisible="type != 'individual'"/>
-                <field name="company_name" invisible="type != 'enterprise'"/>
-                <field name="company_sector" invisible="type != 'enterprise'"/>
+                <field name="reclamant_fname"/>
+                <field name="reclamant_lname"/>
+                <field name="reclamant_email"/>
+                <field name="reclamant_phone"/>
             </tree>
         </field>
     </record>
