@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Définition du rapport -->
+    <record id="report_reclamation" model="ir.actions.report">
+        <field name="name">Rapport de Réclamation</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_reclamation_view</field>
+        <field name="binding_model_id" ref="model_reclamationpgi_reclamation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Template du rapport -->
+    <template id="report_reclamation_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: Arial, sans-serif; padding: 20px;">
+                    <!-- En-tête -->
+                    <div class="header" style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #0056b3; font-size: 24px; margin-bottom: 10px;">Rapport de Réclamation</h1>
+                        <p style="font-size: 14px; color: #888;">Référence : <t t-esc="doc.name"/></p>
+                    </div>
+
+                    <!-- Informations de base -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Informations de Base</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 30%;"><strong>Date de Réclamation :</strong></td>
+                                <td><t t-esc="doc.date or 'Non spécifiée'"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Objet :</strong></td>
+                                <td><t t-esc="doc.objet or 'Non spécifié'"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Origine :</strong></td>
+                                <td><t t-esc="dict(doc._fields['origin'].selection).get(doc.origin, 'Non spécifiée')"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Réclamant :</strong></td>
+                                <td>
+                                    <t t-if="doc.reclamant_id.type == 'individual'">
+                                        <t t-esc="doc.reclamant_id.first_name or ''"/> <t t-esc="doc.reclamant_id.last_name or ''"/>
+                                    </t>
+                                    <t t-elif="doc.reclamant_id.type == 'enterprise'">
+                                        <t t-esc="doc.reclamant_id.company_name or 'Non spécifié'"/>
+                                    </t>
+                                    <t t-else="">
+                                        Non spécifié
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agent Assigné :</strong></td>
+                                <td><t t-esc="doc.assigned_agent.name or 'Non assigné'"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- Définition du rapport pour le modèle Decision -->
+    <record id="report_decision" model="ir.actions.report">
+        <field name="name">Rapport de Décision</field>
+        <field name="model">reclamationpgi.decision</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_decision_view</field>
+        <field name="binding_model_id" ref="model_reclamationpgi_decision"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Template du rapport pour le modèle Decision -->
+    <template id="report_decision_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: 'Roboto', Arial, sans-serif; padding: 20px;">
+                    <!-- En-tête -->
+                    <div class="header" style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #0056b3; font-size: 24px; margin-bottom: 10px;">Rapport de Décision</h1>
+                        <p style="font-size: 14px; color: #888;">Objet : <t t-esc="doc.name"/></p>
+                        <p style="font-size: 14px; color: #888;">Signature : <t t-esc="doc.signature"/></p>
+                    </div>
+
+                    <!-- Détails de la décision -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Détails de la Décision</h3>
+                        <p><strong>Décision :</strong></p>
+                        <p><t t-esc="doc.decision"/></p>
+                        <p><strong>Statut :</strong> <t t-esc="dict(doc._fields['statut'].selection).get(doc.statut, 'Non spécifié')"/></p>
+                        <p><strong>Communiqué :</strong> <t t-esc="'Oui' if doc.is_communicated else 'Non'"/></p>
+                    </div>
+
+                    <!-- Membres de la commission -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Membres de la Commission</h3>
+                        <ul>
+                            <t t-foreach="doc.membres_commission" t-as="member">
+                                <li><t t-esc="member.name"/></li>
+                            </t>
+                        </ul>
+                    </div>
+
+                    <!-- Intervention associée -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Intervention Associée</h3>
+                        <p><strong>Intervention :</strong> <t t-esc="doc.intervention_id.name or 'Non spécifiée'"/></p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

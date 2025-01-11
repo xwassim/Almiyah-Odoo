@@ -4,6 +4,11 @@
         <field name="name">Responsable Technique</field>
     </record>
 
+    <!-- Sous-Groupe : Responsable Commission -->
+    <record id="group_responsable_com" model="res.groups">
+        <field name="name">Responsable Commission</field>
+    </record>
+
     <!-- Sous-Groupe : Agents -->
     <record id="group_agents" model="res.groups">
         <field name="name">Agents</field>
@@ -14,6 +19,6 @@
     <record id="group_manager_1" model="res.groups">
         <field name="name">Reclamation / Manager</field>
         <!-- Ajouter les sous-groupes ici -->
-        <field name="implied_ids" eval="[(4, ref('reclamationpgi.group_responsable_tech')), (4, ref('reclamationpgi.group_agents'))]"/>
+        <field name="implied_ids" eval="[(4, ref('reclamationpgi.group_responsable_tech')), (4, ref('reclamationpgi.group_responsable_com')), (4, ref('reclamationpgi.group_agents'))]"/>
     </record>
 </odoo>

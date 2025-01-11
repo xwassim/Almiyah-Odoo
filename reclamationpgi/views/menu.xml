@@ -20,9 +20,9 @@
     <menuitem id="interventions_menu" name="Interventions" parent="main_reclamationpgi_menu"/>
 
     <!-- Sous-menus pour Interventions -->
-    <menuitem id="assignation_submenu" name="Assignation" parent="interventions_menu"/>
-    <menuitem id="intervention_submenu" name="Intervention" parent="interventions_menu"/>
-    <menuitem id="decisions_submenu" name="Décisions" parent="interventions_menu"/>
+    <menuitem id="assignation_submenu" name="Assignation" parent="interventions_menu" action="action_equipe"/>
+    <menuitem id="intervention_submenu" name="Intervention" parent="interventions_menu" action="action_intervention"/>
+    <menuitem id="decisions_submenu" name="Décisions" parent="interventions_menu" action="action_decision"/>
 
     <!-- Menu Users and Groups -->
     <menuitem id="users_groups_menu" name="Nos employés" parent="main_reclamationpgi_menu"/>
