@@ -27,7 +27,7 @@
                         <field name="statut"/>
                         <field name="date"/>
                     </group>
-                    <group string="Intervention Technique">
+                    <group string="Intervention Technique" groups="reclamationpgi.group_responsable_tech">
                         <field name="actions_realisees"/>
                         <field name="deplacements_ids">
                             <tree>
@@ -36,7 +36,7 @@
                             </tree>
                         </field>
                     </group>
-                    <group string="Intervention Commerciale">
+                    <group string="Intervention Commerciale" groups="reclamationpgi.group_responsable_com">
                         <field name="objet"/>
                         <field name="decision_ids">
                             <tree>
