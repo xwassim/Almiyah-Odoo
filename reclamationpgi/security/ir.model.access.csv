@@ -3,3 +3,14 @@ reclamation_manager,reclamation manager,model_reclamationpgi_reclamation,group_m
 reclamation_read_all,reclamation all,model_reclamationpgi_reclamation,,1,0,0,0
 reclamant_manager,reclamant manager,model_reclamationpgi_reclamant,group_manager_1,1,1,1,1
 reclamant_read_all,reclamant all,model_reclamationpgi_reclamant,,1,0,0,0
+reclamation_user_access,reclamation user,model_reclamationpgi_reclamation,base.group_user,1,1,1,1
+equipe_manager_access,Equipe Manager Access,model_reclamationpgi_equipe,base.group_user,1,1,1,1
+equipe_user_access,Equipe User Access,model_reclamationpgi_equipe,,1,0,0,0
+intervention_manager,Intervention Manager,model_reclamationpgi_intervention,,1,1,1,1
+intervention_chef_technique,Chef d'Équipe Technique,model_reclamationpgi_intervention,,1,1,1,1
+intervention_chef_commercial,Chef d'Équipe Commercial,model_reclamationpgi_intervention,,1,1,1,1
+intervention_user_access,Intervention User Access,model_reclamationpgi_intervention,base.group_user,1,0,0,0
+decision_manager,Decision Manager,model_reclamationpgi_decision,group_manager_1,1,1,1,1
+decision_user_access,Decision User Access,model_reclamationpgi_decision,base.group_user,1,1,1,1
+deplacement_manager,Deplacement Manager,model_reclamationpgi_deplacement,group_manager_1,1,1,1,1
+deplacement_user_access,Deplacement User Access,model_reclamationpgi_deplacement,base.group_user,1,0,0,0
