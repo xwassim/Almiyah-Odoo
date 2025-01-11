@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_equipe_tree" model="ir.ui.view">
+        <field name="name">equipe.tree</field>
+        <field name="model">reclamationpgi.equipe</field>
+        <field name="arch" type="xml">
+            <tree string="Équipes">
+                <field name="name"/>
+                <field name="chef_id"/>
+                <field name="members_ids" widget="many2many_tags"/>
+                <field name="reclamations_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_equipe_form" model="ir.ui.view">
+        <field name="name">equipe.form</field>
+        <field name="model">reclamationpgi.equipe</field>
+        <field name="arch" type="xml">
+            <form string="Équipe">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="chef_id"/>
+                        <field name="members_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Réclamations Assignées">
+                        <field name="reclamations_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action pour Afficher les Équipes -->
+    <record id="action_equipe" model="ir.actions.act_window">
+        <field name="name">Équipes</field>
+        <field name="res_model">reclamationpgi.equipe</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

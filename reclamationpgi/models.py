@@ -92,3 +92,60 @@ class Reclamant(models.Model):
     company_phone = fields.Char(string="Téléphone de l'Entreprise", states={'readonly': [('type', '!=', 'enterprise')]})
     company_email = fields.Char(string="Email de l'Entreprise", states={'readonly': [('type', '!=', 'enterprise')]})
     company_sector = fields.Char(string="Secteur d'Activité", states={'readonly': [('type', '!=', 'enterprise')]})
+
+class Equipe(models.Model):
+    _name = 'reclamationpgi.equipe'
+    _description = 'Équipe'
+
+    name = fields.Char(string="Nom de l'Équipe", required=True)
+    members_ids = fields.Many2many('hr.employee', string="Membres de l'Équipe")
+    chef_id = fields.Many2one('hr.employee', string="Chef d’Équipe", required=True)
+    reclamations_ids = fields.Many2many('reclamationpgi.reclamation', string="Réclamations Assignées")
+    
+class Intervention(models.Model):
+    _name = 'reclamationpgi.intervention'
+    _description = 'Intervention'
+
+    name = fields.Char(string="Nom de l'Intervention", required=True)
+    reclamation_id = fields.Many2one('reclamationpgi.reclamation', string="Réclamation")
+    equipe_id = fields.Many2one('reclamationpgi.equipe', string="Équipe Assignée")
+    statut = fields.Selection([
+        ('pas_commence', 'Pas Commencée'),
+        ('en_cours', 'En Cours'),
+        ('cloturee', 'Clôturée')
+    ], string="Statut", default='pas_commence')
+    date = fields.Date(string="Date de l'Intervention")
+
+    # Pour les interventions techniques
+    actions_realisees = fields.Text(string="Actions Réalisées")
+    deplacements_ids = fields.Many2many('reclamationpgi.deplacement', string="Déplacements")
+
+    # Pour les interventions commerciales
+    objet = fields.Text(string="Objet de l'Intervention")
+    decision_ids = fields.One2many('reclamationpgi.decision', 'intervention_id', string="Décisions")
+
+
+class Deplacement(models.Model):
+    _name = 'reclamationpgi.deplacement'
+    _description = 'Déplacement'
+
+    lieu = fields.Char(string="Lieu", required=True)
+    actions = fields.Text(string="Actions", required=True)
+
+class Decision(models.Model):
+    _name = 'reclamationpgi.decision'
+    _description = 'Décision'
+
+    name = fields.Char(string="Objet de la Décision", required=True)
+    signature = fields.Char(string="Signature", required=True)
+    decision = fields.Text(string="Décision", required=True)
+    statut = fields.Selection([
+        ('en_cours', 'En Cours'),
+        ('finalisee', 'Finalisée'),
+        ('annulee', 'Annulée'),
+    ], string="Statut", default='en_cours', required=True)
+    
+    membres_commission = fields.Many2many('hr.employee', string="Membres de la Commission")
+    
+    intervention_id = fields.Many2one('reclamationpgi.intervention', string="Intervention Associée", required=True)
+    is_communicated = fields.Boolean(string='Communiqué ?', default=False)

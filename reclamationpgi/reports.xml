@@ -61,4 +61,57 @@
             </t>
         </t>
     </template>
+
+    <!-- Définition du rapport pour le modèle Decision -->
+    <record id="report_decision" model="ir.actions.report">
+        <field name="name">Rapport de Décision</field>
+        <field name="model">reclamationpgi.decision</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_decision_view</field>
+        <field name="binding_model_id" ref="model_reclamationpgi_decision"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Template du rapport pour le modèle Decision -->
+    <template id="report_decision_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: 'Roboto', Arial, sans-serif; padding: 20px;">
+                    <!-- En-tête -->
+                    <div class="header" style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #0056b3; font-size: 24px; margin-bottom: 10px;">Rapport de Décision</h1>
+                        <p style="font-size: 14px; color: #888;">Objet : <t t-esc="doc.name"/></p>
+                        <p style="font-size: 14px; color: #888;">Signature : <t t-esc="doc.signature"/></p>
+                    </div>
+
+                    <!-- Détails de la décision -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Détails de la Décision</h3>
+                        <p><strong>Décision :</strong></p>
+                        <p><t t-esc="doc.decision"/></p>
+                        <p><strong>Statut :</strong> <t t-esc="dict(doc._fields['statut'].selection).get(doc.statut, 'Non spécifié')"/></p>
+                        <p><strong>Communiqué :</strong> <t t-esc="'Oui' if doc.is_communicated else 'Non'"/></p>
+                    </div>
+
+                    <!-- Membres de la commission -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Membres de la Commission</h3>
+                        <ul>
+                            <t t-foreach="doc.membres_commission" t-as="member">
+                                <li><t t-esc="member.name"/></li>
+                            </t>
+                        </ul>
+                    </div>
+
+                    <!-- Intervention associée -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; font-size: 18px; padding-bottom: 5px;">Intervention Associée</h3>
+                        <p><strong>Intervention :</strong> <t t-esc="doc.intervention_id.name or 'Non spécifiée'"/></p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
 </odoo>

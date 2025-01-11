@@ -1,0 +1,62 @@
+<odoo>
+    <!-- Vue List des Interventions -->
+    <record id="view_intervention_tree" model="ir.ui.view">
+        <field name="name">intervention.tree</field>
+        <field name="model">reclamationpgi.intervention</field>
+        <field name="arch" type="xml">
+            <tree string="Interventions">
+                <field name="name"/>
+                <field name="reclamation_id"/>
+                <field name="statut"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Form des Interventions -->
+    <record id="view_intervention_form" model="ir.ui.view">
+        <field name="name">intervention.form</field>
+        <field name="model">reclamationpgi.intervention</field>
+        <field name="arch" type="xml">
+            <form string="Intervention">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="reclamation_id"/>
+                        <field name="equipe_id"/>
+                        <field name="statut"/>
+                        <field name="date"/>
+                    </group>
+                    <group string="Intervention Technique">
+                        <field name="actions_realisees"/>
+                        <field name="deplacements_ids">
+                            <tree>
+                                <field name="lieu"/>
+                                <field name="actions"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Intervention Commerciale">
+                        <field name="objet"/>
+                        <field name="decision_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="signature"/>
+                                <field name="decision"/>
+                                <field name="statut"/>
+                                <field name="membres_commission"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action pour afficher les interventions -->
+    <record id="action_intervention" model="ir.actions.act_window">
+        <field name="name">Interventions</field>
+        <field name="res_model">reclamationpgi.intervention</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
