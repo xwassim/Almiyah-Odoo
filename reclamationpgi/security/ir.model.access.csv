@@ -1,5 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-reclamation_manager,reclamation manager,model_reclamationpgi_reclamation,group_manager_1,1,1,1,1
-reclamation_read_all,reclamation all,model_reclamationpgi_reclamation,,1,0,0,0
-reclamant_manager,reclamant manager,model_reclamationpgi_reclamant,group_manager_1,1,1,1,1
-reclamant_read_all,reclamant all,model_reclamationpgi_reclamant,,1,0,0,0
+reclamation_manager,Reclamation Manager,model_reclamationpgi_reclamation,group_manager_1,1,1,1,1
+reclamation_read_all,Reclamation All,model_reclamationpgi_reclamation,,1,0,0,0
+reclamant_manager,Reclamant Manager,model_reclamationpgi_reclamant,group_manager_1,1,1,1,1
+reclamant_read_all,Reclamant All,model_reclamationpgi_reclamant,,1,0,0,0
+communication_manager,Communication Manager,model_reclamationpgi_communication,group_communication_manager,1,1,1,1
+communication_read_all,Communication All,model_reclamationpgi_communication,,1,0,0,0

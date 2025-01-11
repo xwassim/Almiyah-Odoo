@@ -32,6 +32,7 @@
         'views/reclamant.xml',
         'views/website_form.xml',
         'views/menu.xml',
+        'views/communication.xml',
 	    'reports/reports.xml',
     ],
 

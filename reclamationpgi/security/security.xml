@@ -3,6 +3,16 @@
             <field name="name">Reclamation / Manager</field>
         </record>
 
+ <record id="group_communication_manager" model="res.groups">
+        <field name="name">Communication Manager</field>
+    </record>
+
+    <!-- Create the Communication User Group -->
+    <record id="group_communication_user" model="res.groups">
+        <field name="name">Communication User</field>
+    
+    </record>
+       
         <!-- Groupe Responsable Technique >
         <record id="group_responsable_tech" model="res.groups">
             <field name="name">Responsable Technique</field>

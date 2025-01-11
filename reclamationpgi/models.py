@@ -103,3 +103,25 @@ class Reclamant(models.Model):
     company_sector = fields.Char(string="Secteur d'Activité", states={'readonly': [('type', '!=', 'enterprise')]})
     # added by wassim (champ raison social)
     company_code = fields.Char(string="Raison social",states={'readonly': [('type', '!=', 'entreprise')]})
+
+class Communication(models.Model):
+    _name = 'reclamationpgi.communication'
+    _description = "Communication liée aux Réclamations"
+
+    # Champs de communication
+    type_communication = fields.Selection([
+        ('mail', 'Email'),
+        ('appel', 'Appel Téléphonique'),
+        ('sms', 'SMS')
+    ], string="Type de Communication", required=True)
+    date = fields.Datetime(string="Date", required=True, default=fields.Datetime.now)
+    motif = fields.Selection([
+        ('infos complémentaires', 'Demande d’informations complémentaires'),
+        ('response', 'Réponse au réclamant'),
+        ('decision', 'Information de la décision')
+    ], string="Motif de la Communication", required=True)
+    contenu = fields.Text(string="Contenu / Description", required=True)
+    
+    # Relations
+    reclamation_id = fields.Many2one('reclamationpgi.reclamation', string="Réclamation", required=True)
+    reclamant_id = fields.Many2one('reclamationpgi.reclamant', string="Réclamant", required=True)

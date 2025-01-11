@@ -1,0 +1,45 @@
+<odoo>
+    <!-- Vue Formulaire Communication -->
+    <record model="ir.ui.view" id="communication_form_view">
+        <field name="name">communication.form</field>
+        <field name="model">reclamationpgi.communication</field>
+        <field name="arch" type="xml">
+            <form string="Communication">
+                <sheet>
+                    <group>
+                        <field name="type_comm" required="1"/>
+                        <field name="date" required="1"/>
+                        <field name="motif" required="1"/>
+                        <field name="contenu" required="1"/>
+                    </group>
+                    <group>
+                        <field name="reclamation_id" required="1"/>
+                        <field name="reclamant_id" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Communication -->
+    <record model="ir.ui.view" id="communication_tree_view">
+        <field name="name">communication.tree</field>
+        <field name="model">reclamationpgi.communication</field>
+        <field name="arch" type="xml">
+            <tree string="Communications">
+                <field name="type_comm"/>
+                <field name="date"/>
+                <field name="motif"/>
+                <field name="reclamation_id"/>
+                <field name="reclamant_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action Liste Communication -->
+    <record model="ir.actions.act_window" id="communication_list_action">
+        <field name="name">Communications</field>
+        <field name="res_model">reclamationpgi.communication</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

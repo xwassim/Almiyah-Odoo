@@ -68,5 +68,6 @@
         <field name="name">Réclamants</field>
         <field name="res_model">reclamationpgi.reclamant</field>
         <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="reclamant_tree_view"/>
     </record>
 </odoo>

@@ -13,8 +13,9 @@
     <!-- Menu Contact Réclamants -->
     <menuitem id="contact_reclamants_menu" name="Contact Réclamants" parent="main_reclamationpgi_menu"/>
 
-    <!-- Sous-menus pour Contact Réclamants -->
-    <menuitem id="communication_submenu" name="Communication" parent="contact_reclamants_menu"/>
+     <!-- Sous-menus pour Contact Réclamants -->
+    <menuitem id="reclamants_contact_submenu" name="Réclamants" parent="contact_reclamants_menu" action="reclamant_list_action"/>
+    <menuitem id="communication_submenu" name="Communication" parent="contact_reclamants_menu" action="communication_list_action"/>
 
     <!-- Menu Interventions -->
     <menuitem id="interventions_menu" name="Interventions" parent="main_reclamationpgi_menu"/>
