@@ -3,3 +3,5 @@ reclamation_manager,reclamation manager,model_reclamationpgi_reclamation,group_m
 reclamation_read_all,reclamation all,model_reclamationpgi_reclamation,,1,0,0,0
 reclamant_manager,reclamant manager,model_reclamationpgi_reclamant,group_manager_1,1,1,1,1
 reclamant_read_all,reclamant all,model_reclamationpgi_reclamant,,1,0,0,0
+reclamation_responsable_tech,Responsable Technique,model_reclamationpgi_reclamation,group_responsable_tech,1,1,0,0
+reclamation_agents,Agents,model_reclamationpgi_reclamation,group_agents,1,1,0,0

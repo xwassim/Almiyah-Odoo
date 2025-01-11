@@ -1,6 +1,6 @@
 <odoo>
     <!-- Vue Formulaire Réclamation -->
-    <record model="ir.ui.view" id="reclamation_form_view">
+<record model="ir.ui.view" id="reclamation_form_view">
         <field name="name">reclamation.form</field>
         <field name="model">reclamationpgi.reclamation</field>
         <field name="arch" type="xml">
@@ -8,13 +8,13 @@
                 <sheet>
                     <!-- Informations principales -->
                     <group>
-                        <field name="name" required="1" readonly="status != 'pending'"/>
+                        <field name="name" required="1" readonly="status != 'pending'" />
                         <field name="date" required="1" readonly="status != 'pending'"/>
                         <field name="objet" required="1" readonly="status != 'pending'"/>
                         <field name="description" required="1" readonly="status != 'pending'"/>
                         <field name="justification_file" readonly="status != 'pending'"/>
                         <field name="has_justification" readonly="status != 'pending'"/>
-                        <field name="provenance"  readonly="status != 'pending'"/>
+                        <field name="provenance" readonly="status != 'pending'"/>
                     </group>
 
                     <!-- Origine de la Réclamation -->
@@ -29,19 +29,19 @@
 
                     <!-- Agence et Traitement -->
                     <group string="Agence et Traitement">
-                        <field name="agency_id" required="1" readonly="status != 'pending'"/>
-                        <field name="urgency" readonly="status != 'pending'"/>
-                        <field name="claim_type"  readonly="status != 'pending'"/>
-                        <field name="complexity"  readonly="status != 'pending'"/>
-                        <field name="severity"  readonly="status != 'pending'"/>
-                        <field name="status" readonly="status != 'pending'"/>
-                        <field name="assigned_agent" readonly="status != 'pending'"/>
+                        <field name="agency_id" required="1" readonly="status != 'pending'" groups="reclamationpgi.group_manager_1"/>
+                        <field name="urgency" readonly="status != 'pending'" groups="reclamationpgi.group_manager_1"/>
+                        <field name="claim_type" readonly="status != 'pending'" groups="reclamationpgi.group_manager_1"/>
+                        <!-- Champ complexity : accessible en écriture pour le Responsable Technique -->
+                        <field name="complexity" groups="reclamationpgi.group_responsable_tech" />
+                        <field name="severity" groups="reclamationpgi.group_responsable_tech" readonly="0"/>
+                        <field name="status" readonly="status != 'pending'" />
+                        <field name="assigned_agent" readonly="status != 'pending'" />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-
     <!-- Vue Liste Réclamation -->
     <record model="ir.ui.view" id="reclamation_tree_view">
         <field name="name">reclamation.tree</field>

@@ -26,6 +26,7 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
+        'security/securitychamp.xml',
         'templates.xml',
         'views/reclamation.xml',
         'views/agent.xml',

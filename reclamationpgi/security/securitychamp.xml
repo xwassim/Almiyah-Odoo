@@ -1,0 +1,25 @@
+<odoo>
+    <!-- Permissions pour le groupe Responsable Technique >
+    <record id="reclamation_responsable_tech_complexity" model="ir.model.fields">
+        <field name="name">complexity</field>
+        <field name="model_id" ref="reclamationpgi.model_reclamationpgi_reclamation"/>
+        <field name="ttype">selection</field> < Ajoutez le type de champ ici >
+        <field name="groups" eval="[(4, ref('group_responsable_tech'))]"/>
+    </record>
+
+    <record id="reclamation_responsable_tech_severity" model="ir.model.fields">
+        <field name="name">severity</field>
+        <field name="model_id" ref="reclamationpgi.model_reclamationpgi_reclamation"/>
+        <field name="ttype">selection</field> < Ajoutez le type de champ ici >
+        <field name="groups" eval="[(4, ref('group_responsable_tech'))]"/>
+    </record>
+
+    < Permissions pour le groupe Agents >
+    <record id="reclamation_agents_assigned_agent" model="ir.model.fields">
+        <field name="name">assigned_agent</field>
+        <field name="model_id" ref="reclamationpgi.model_reclamationpgi_reclamation"/>
+        <field name="ttype">many2one</field> < Ajoutez le type de champ ici >
+        <field name="groups" eval="[(4, ref('group_agents'))]"/>
+    </record> 
+    -->
+</odoo>

@@ -70,12 +70,13 @@ class Agent(models.Model):
             ('agent_technique', 'Agent Technique'),
             ('agent_commission_redressement', 'Agent Commission Redressement'),
             ('responsable_agence', 'Responsable Agence')
-        ], string="Rôle", help="Rôle de l'agent dans l'organisation.")
+        ], string="Rôle", help="Rôle de l'agent dans l'organisation.", required=True)
         
         department = fields.Selection([
         ('commercial', 'Commerciale'),
-        ('technical', 'Technique')
-    ], string="Departement agent", required=True)
+        ('technical', 'Technique'),
+        ('autre', 'Autre')
+    ], string="Departement agent")
 
 class Reclamant(models.Model):
     _name = 'reclamationpgi.reclamant'
