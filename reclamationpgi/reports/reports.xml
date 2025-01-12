@@ -139,7 +139,7 @@
             <hr style="border: 1px solid #ccc; margin-top: 20px; margin-bottom: 20px;"/>
         </t>
     </t>
-</template>
+    </template>
 
     <!-- Définition du rapport pour le modèle Decision -->
     <record id="report_decision" model="ir.actions.report">
