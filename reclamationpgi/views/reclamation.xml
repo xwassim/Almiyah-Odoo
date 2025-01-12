@@ -12,17 +12,16 @@
                         <field name="date" required="1" readonly="status != 'pending'"/>
                         <field name="objet" required="1" readonly="status != 'pending'"/>
                         <field name="description" required="1" readonly="status != 'pending'"/>
+                        <field name="provenance" readonly="status != 'pending'"/>
                         <field name="justification_file" readonly="status != 'pending'"/>
+                        <field name="has_justification" readonly="status != 'pending'"/>
                     </group>
 
                     <!-- Origine e de la Réclamation -->
                     <group string="Origine de la Réclamation">
                         <field name="origin" readonly="status != 'pending'"/>
                     </group>
-                    <!--  provenance de la Réclamation -->
-                    <group string="Provenance de la Réclamation">
-                        <field name="provenance" readonly="status != 'pending'"/>
-                    </group>
+
 
 
                     <!-- Informations Réclamant -->
@@ -32,7 +31,7 @@
 
                     <!-- Agence et Traitement -->
                     <group string="Agence et Traitement">
-                        <field name="agency_id" readonly="status != 'pending'"/>
+                        <field name="agency_id" required="1" readonly="status != 'pending'"/>
                         <field name="urgency" readonly="status != 'pending'"/>
                         <field name="claim_type" readonly="status != 'pending'"/>
                         <field name="complexity" readonly="status != 'pending'"/>
@@ -58,6 +57,7 @@
                 <field name="urgency"/>
                 <field name="claim_type"/>
                 <field name="status"/>
+                <field name="has_justification"/>
             </tree>
         </field>
     </record>
@@ -74,7 +74,55 @@
                 <field name="claim_type"/>
                 <field name="urgency"/>
                 <field name="status"/>
+                <field name="has_justification"/>
             </search>
+        </field>
+    </record>
+
+    <!-- Kanban reclamation view -->
+    <record model="ir.ui.view" id="reclamation_kanban_view">
+        <field name="name">reclamation.kanban</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="arch" type="xml">
+            <kanban string="Réclamations">
+                <templates>
+                    <!-- Card Template -->
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click" style="border: 1px solid #ddd; border-radius: 8px; padding: 16px; background-color: #f9f9f9;">
+                            <!-- Header Section -->
+                            <div class="o_kanban_card_header" style="margin-bottom: 12px;">
+                                <strong style="font-size: 18px; color: #333;">
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+
+                            <!-- Body Section -->
+                            <div class="o_kanban_card_body" style="margin-bottom: 12px;">
+                                <div style="margin-bottom: 5px;">
+                                    <strong>Date:</strong>
+                                    <field name="date" style="margin-left: 6px;"/>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    <strong>Objet:</strong>
+                                    <field name="objet" style="margin-left: 6px;"/>
+                                </div>
+                                <div>
+                                    <strong>Provenance:</strong>
+                                    <field name="provenance" style="margin-left: 6px;"/>
+                                </div>
+                            </div>
+
+                            <!-- Footer Section -->
+                            <div class="o_kanban_card_footer" style="background-color: #f0f0f0; padding: 8px; border-radius: 4px;">
+                                <span>
+                                    <strong>Status:</strong>
+                                    <field name="status" style="margin-left: 6px;"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -82,7 +130,7 @@
     <record model="ir.actions.act_window" id="reclamation_list_action">
         <field name="name">Réclamations</field>
         <field name="res_model">reclamationpgi.reclamation</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Créez votre première réclamation ici !

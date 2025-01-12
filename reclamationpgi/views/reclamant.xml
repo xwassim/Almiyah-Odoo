@@ -63,6 +63,7 @@
         </field>
     </record>
 
+
     <!-- Action Liste Réclamant -->
     <record model="ir.actions.act_window" id="reclamant_list_action">
         <field name="name">Réclamants</field>

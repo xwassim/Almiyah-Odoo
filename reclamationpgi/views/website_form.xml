@@ -44,7 +44,14 @@
                                 <input type="file" name="justification_file" id="justification_file" class="form-control" />
                             </div>
 
-                            <h1 class="my-5">Details sur la Réclamant</h1>
+                            <div class="form-group" style="margin-top: 20px;">
+                                <input type="checkbox" name="has_justification" id="has_justification" />
+                                <label for="has_justification" class="control-label">Cochez cette case si vous avez encore d'autres pieces justificatives </label>
+
+                                <p>Nous vous contacterons par mail pour les obtenirs</p>
+                            </div>
+
+                            <h1 class="my-5">Details sur le Réclamant</h1>
 
                             <div class="form-group" style="margin-top: 20px;">
                                 <label for="type" class="control-label">Type de Réclamant</label>

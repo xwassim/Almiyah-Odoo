@@ -28,11 +28,16 @@
         'security/ir.model.access.csv',
         'templates.xml',
         'views/reclamation.xml',
+        'views/intervention.xml',
+        'views/equipe.xml',
+        'views/decision.xml',
         'views/agent.xml',
         'views/reclamant.xml',
         'views/website_form.xml',
+        'reports/reports.xml',
+        'reports/report_decision.xml',
+        'reports/report_intervention_technique.xml',
         'views/menu.xml',
-	    'reports/reports.xml',
     ],
 
     # only loaded in demonstration mode

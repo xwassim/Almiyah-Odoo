@@ -25,6 +25,9 @@ class ReclamationController(http.Controller):
                 'reclamant_phone': kw.get('reclamant_phone'),
             }
 
+            # to see if the client wants to submit more than 1 file
+            has_justification = bool(kw.get('has_justification'))
+
             if kw.get('type') == 'enterprise':
                 reclamant_data.update({
                     'company_name': kw.get('company_name'),
@@ -49,6 +52,9 @@ class ReclamationController(http.Controller):
                 # Encode the file content in base64
                 file_content = base64.b64encode(file_content)
             
+            #setup reclamation origin based on reclamant type
+            temp = 'entreprise' if kw.get('type') == 'entreprise' else 'citoyen'
+            
             # Create the Reclamation record and link it to the Reclamant
             request.env['reclamationpgi.reclamation'].sudo().create({
                 'name': kw.get('name'),
@@ -56,9 +62,11 @@ class ReclamationController(http.Controller):
                 'objet': kw.get('objet'),
                 'description': kw.get('description'),
                 'provenance': 'siteweb',
+                'origin': temp,
                 'agency_id': company_partner.id,
                 'justification_file': file_content,  # Store the base64-encoded file content
                 'reclamant_id': reclamant.id,
+                'has_justification': has_justification,  # Store the checkbox value
             })
 
             # Render a thank-you page

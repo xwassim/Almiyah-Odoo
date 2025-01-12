@@ -10,7 +10,8 @@ class Reclamation(models.Model):
     objet = fields.Char(string="Objet de la Réclamation", required=True)
     description = fields.Text(string="Description de la Réclamation", required=True)
     justification_file = fields.Binary(string="Pièces Justificatives")
-
+    #to check if the client want to submit more than one file
+    has_justification = fields.Boolean(string="A-t-il d'autres pièces justificatives ?", default=False)
     # Agence
     agency_id = fields.Many2one('res.partner', string="Agence", required=False, help="Agence associée à la réclamation")
 
@@ -32,8 +33,7 @@ class Reclamation(models.Model):
     reclamant_id = fields.Many2one('reclamationpgi.reclamant', string="Réclamant")
 
     # Assignation de l'agent
-    assigned_agent = fields.Many2one('res.users', string="Agent Assigné", 
-                                     help="Assigné automatiquement si la réclamation est saisie sur place.",required=False)
+    assigned_agent = fields.Many2one('hr.employee', string="Agent Assigné")
 
     # Statut de la réclamation
     status = fields.Selection([
@@ -76,7 +76,7 @@ class Agent(models.Model):
         department = fields.Selection([
         ('commercial', 'Commerciale'),
         ('technical', 'Technique')
-    ], string="Departement agent", required=True)
+    ], string="Departement agent")
 
 class Reclamant(models.Model):
     _name = 'reclamationpgi.reclamant'
@@ -104,3 +104,61 @@ class Reclamant(models.Model):
     company_sector = fields.Char(string="Secteur d'Activité", states={'readonly': [('type', '!=', 'enterprise')]})
     # added by wassim (champ raison social)
     company_code = fields.Char(string="Raison social",states={'readonly': [('type', '!=', 'entreprise')]})
+
+
+class Equipe(models.Model):
+    _name = 'reclamationpgi.equipe'
+    _description = 'Équipe'
+
+    name = fields.Char(string="Nom de l'Équipe", required=True)
+    members_ids = fields.Many2many('hr.employee', string="Membres de l'Équipe")
+    chef_id = fields.Many2one('hr.employee', string="Chef d’Équipe", required=True)
+    reclamations_ids = fields.Many2many('reclamationpgi.reclamation', string="Réclamations Assignées")
+    
+class Intervention(models.Model):
+    _name = 'reclamationpgi.intervention'
+    _description = 'Intervention'
+
+    name = fields.Char(string="Nom de l'Intervention", required=True)
+    reclamation_id = fields.Many2one('reclamationpgi.reclamation', string="Réclamation")
+    equipe_id = fields.Many2one('reclamationpgi.equipe', string="Équipe Assignée")
+    statut = fields.Selection([
+        ('pas_commence', 'Pas Commencée'),
+        ('en_cours', 'En Cours'),
+        ('cloturee', 'Clôturée')
+    ], string="Statut", default='pas_commence')
+    date = fields.Date(string="Date de l'Intervention")
+
+    # Pour les interventions techniques
+    actions_realisees = fields.Text(string="Actions Réalisées")
+    deplacements_ids = fields.Many2many('reclamationpgi.deplacement', string="Déplacements")
+
+    # Pour les interventions commerciales
+    objet = fields.Text(string="Objet de l'Intervention")
+    decision_ids = fields.One2many('reclamationpgi.decision', 'intervention_id', string="Décisions")
+
+
+class Deplacement(models.Model):
+    _name = 'reclamationpgi.deplacement'
+    _description = 'Déplacement'
+
+    lieu = fields.Char(string="Lieu", required=True)
+    actions = fields.Text(string="Actions", required=True)
+
+class Decision(models.Model):
+    _name = 'reclamationpgi.decision'
+    _description = 'Décision'
+
+    name = fields.Char(string="Objet de la Décision", required=True)
+    signature = fields.Char(string="Signature", required=True)
+    decision = fields.Text(string="Décision", required=True)
+    statut = fields.Selection([
+        ('en_cours', 'En Cours'),
+        ('finalisee', 'Finalisée'),
+        ('annulee', 'Annulée'),
+    ], string="Statut", default='en_cours', required=True)
+    
+    membres_commission = fields.Many2many('hr.employee', string="Membres de la Commission")
+    
+    intervention_id = fields.Many2one('reclamationpgi.intervention', string="Intervention Associée", required=True)
+    is_communicated = fields.Boolean(string='Communiqué ?', default=False)
