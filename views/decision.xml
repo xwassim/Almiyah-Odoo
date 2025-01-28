@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vue pour la gestion des Décisions -->
+    <record id="view_decision_form" model="ir.ui.view">
+        <field name="name">reclamationpgi.decision.form</field>
+        <field name="model">reclamationpgi.decision</field>
+        <field name="arch" type="xml">
+            <form string="Décision">
+                <sheet>
+                    <group>
+                        <field name="name" string="Objet de la Décision" required="1"/>
+                        <field name="signature" string="Signature" required="1"/>
+                        <field name="decision" string="Décision" widget="text" required="1"/>
+                        <field name="statut" string="Statut" required="1"/>
+                        <field name="is_communicated"/>
+                    </group>
+                    <group>
+                        <field name="membres_commission" widget="many2many_tags" string="Membres de la Commission"/>
+                    </group>
+                    <group>
+                        <field name="intervention_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue de liste des décisions -->
+    <record id="view_decision_tree" model="ir.ui.view">
+        <field name="name">reclamationpgi.decision.tree</field>
+        <field name="model">reclamationpgi.decision</field>
+        <field name="arch" type="xml">
+            <tree string="Décisions">
+                <field name="name" string="Objet"/>
+                <field name="signature" string="Signature"/>
+                <field name="statut" string="Statut"/>
+                <field name="intervention_id" string="Intervention"/>
+                <field name="is_communicated"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action pour les décisions -->
+    <record id="action_decision" model="ir.actions.act_window">
+        <field name="name">Décisions</field>
+        <field name="res_model">reclamationpgi.decision</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,184 @@
+<odoo>
+    <!-- Menu to access the form -->
+    <record id="menu_reclamation_form" model="website.menu">
+        <field name="name">Nouvelle Réclamation</field>
+        <field name="url">/reclamation_webform</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">55</field>
+    </record>
+
+    <!-- Form to create a new reclamation -->
+    <template id="create_reclamation" name="Nouvelle Réclamation">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <form role="form" action="/create/reclamation" method="POST" style="margin-top: 40px;">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <!-- Réclamation Details -->
+                            <h1 class="my-5">Details sur la Réclamation</h1>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="name" class="control-label">Nom de la Réclamation</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nom de la réclamation" required="required"/>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="date" class="control-label">Date de la Réclamation</label>
+                                <input type="date" name="date" id="date" class="form-control" required="required" />
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="objet" class="control-label">Objet de la Réclamation</label>
+                                <input type="text" name="objet" id="objet" class="form-control" placeholder="Objet" required="required" />
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="description" class="control-label">Description</label>
+                                <textarea name="description" id="description" class="form-control" placeholder="Description détaillée de la réclamation" required="required"></textarea>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="justification_file" class="control-label">Pièces Justificatives</label>
+                                <input type="file" name="justification_file" id="justification_file" class="form-control" />
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <input type="checkbox" name="has_justification" id="has_justification" />
+                                <label for="has_justification" class="control-label">Cochez cette case si vous avez encore d'autres pieces justificatives </label>
+
+                                <p>Nous vous contacterons par mail pour les obtenirs</p>
+                            </div>
+
+                            <h1 class="my-5">Details sur le Réclamant</h1>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="type" class="control-label">Type de Réclamant</label>
+                                <select name="type" id="type" class="form-control" required="required">
+                                    <option value="individual">Individu</option>
+                                    <option value="enterprise">Entreprise</option>
+                                </select>
+                            </div>
+
+                            <!-- Individual Fields (Always Visible) -->
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="reclamant_fname" class="control-label">Prénom</label>
+                                <input type="text" name="reclamant_fname" id="reclamant_fname" class="form-control" placeholder="Prénom"/>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="reclamant_lname" class="control-label">Nom</label>
+                                <input type="text" name="reclamant_lname" id="reclamant_lname" class="form-control" placeholder="Nom"/>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="reclamant_address" class="control-label">Adresse</label>
+                                <textarea name="reclamant_address" id="reclamant_address" class="form-control" placeholder="Adresse"></textarea>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="reclamant_city" class="control-label">Commune</label>
+                                <input type="text" name="reclamant_city" id="reclamant_city" class="form-control" placeholder="Commune"/>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="reclamant_email" class="control-label">Email</label>
+                                <input type="email" name="reclamant_email" id="reclamant_email" class="form-control" placeholder="Email"/>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label for="reclamant_phone" class="control-label">Téléphone</label>
+                                <input type="text" name="reclamant_phone" id="reclamant_phone" class="form-control" placeholder="Téléphone"/>
+                            </div>
+
+                            <!-- Enterprise Fields (Shown Conditionally) -->
+                            <div id="enterprise-fields" class="enterprise-fields" style="display: none;">
+                                <div class="form-group" style="margin-top: 20px;">
+                                    <label for="company_name" class="control-label">Nom de l'Entreprise</label>
+                                    <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Nom de l'Entreprise"/>
+                                </div>
+
+                                <div class="form-group" style="margin-top: 20px;">
+                                    <label for="company_code" class="control-label">Raison Sociale</label>
+                                    <input type="text" name="company_code" id="company_code" class="form-control" placeholder="Raison Sociale"/>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="clearfix oe_login_button" style="margin-top: 20px;">
+                                <button type="submit" class="btn btn-primary pull-left">Soumettre</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- JavaScript code -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    const typeSelect = document.getElementById('type');
+                    const enterpriseFields = document.getElementById('enterprise-fields');
+
+                    typeSelect.addEventListener('change', function () {
+                        if (typeSelect.value === 'enterprise') {
+                            enterpriseFields.style.display = 'block';
+                        } else {
+                            enterpriseFields.style.display = 'none';
+                        }
+                    });
+                });
+            </script>
+        </t>
+    </template>
+
+    <!-- Thank You Page -->
+    <record id="reclamation_thanks" model="website.page">
+        <field name="name">Thanks for Your Reclamation</field>
+        <field name="type">qweb</field>
+        <field name="url">/reclamation-thank-you</field>
+        <field name="website_published">True</field>
+        <field name="key">reclamationpgi.reclamation_thanks</field>
+        <field name="arch" type="xml">
+            <t name="Thanks for Your Reclamation" t-name="reclamationpgi.reclamation_thanks">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container">
+                            <h1 class="mt-5">Merci pour votre Réclamation!</h1>
+                            <div class="row mt-4">
+                                <div class="col-lg-8">
+                                    <div class="alert alert-success" role="status">
+                                        Votre réclamation a été soumise avec succès.
+                                    </div>
+                                    <p>Nous avons bien reçu votre réclamation et elle sera traitée dans les plus brefs délais.</p>
+                                    <p>Un de nos agents vous contactera si nous avons besoin de plus d'informations.</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="/" class="btn btn-primary">Retour à l'Accueil</a>
+                                <a href="/reclamation_webform" class="btn btn-secondary">Soumettre une Nouvelle Réclamation</a>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+
+    <!-- Thank You Page -->
+    <record id="reclamation_error" model="website.page">
+        <field name="name">Error in your reclamation</field>
+        <field name="type">qweb</field>
+        <field name="url">/reclamation-error</field>
+        <field name="website_published">True</field>
+        <field name="key">reclamationpgi.reclamation_error</field>
+        <field name="arch" type="xml">
+            <t t-name="reclamationpgi.reclamation_error">
+                <h1>Error</h1>
+                <p t-esc="error_message" />
+                <p>Please try again later.</p>
+            </t>
+        </field>
+    </record>
+
+</odoo>

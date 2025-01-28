@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Définition du rapport pour le modèle Decision -->
+    <record id="report_decision" model="ir.actions.report">
+        <field name="name">Rapport de Décision</field>
+        <field name="model">reclamationpgi.decision</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_decision_view</field>
+        <field name="binding_model_id" ref="reclamationpgi.model_reclamationpgi_decision"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <report id="report_decision" model="reclamationpgi.decision" string="Decisions de la commission" report_type="qweb-pdf" file="reclamationpgi.report_decision_view" name="reclamationpgi.report_decision_view" />
+
+    <!-- Template du rapport pour le modèle Decision -->
+    <template id="report_decision_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="font-family: 'Roboto', Arial, sans-serif; padding: 20px;">
+                    <!-- En-tête -->
+                    <div class="header" style="text-align: center; margin-bottom: 30px;">
+                        <h2 style="color: #0056b3;  margin-bottom: 10px;">Rapport de Decision de la Commission</h2>
+                        <p style="font-size: 14px; color: #888;">Objet : <t t-esc="doc.name" style="margin-left: 6px;"/>
+                        </p>
+                        <p style="font-size: 14px; color: #888;">Signature : <t t-esc="doc.signature" style="margin-left: 6px;"/>
+                        </p>
+                    </div>
+
+                    <!-- Détails de la décision -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;">I-Details de la Decision</h3>
+                        <p>
+                            <strong>Decision :</strong>
+                        </p>
+                        <p>
+                            <t t-esc="doc.decision" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>Statut :</strong>
+                            <t t-esc="dict(doc._fields['statut'].selection).get(doc.statut, 'Non spécifié')" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>La decision a-t-elle etait communiquer au reclamant :</strong>
+                            <t t-esc="'Oui' if doc.is_communicated else 'Non'" style="margin-left: 6px;"/>
+                        </p>
+                    </div>
+
+                    <!-- Membres de la commission -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;">II-Membres de la Commission </h3>
+                        <ul>
+                            <t t-foreach="doc.membres_commission" t-as="member">
+                                <li>
+                                    <t t-esc="member.name"/>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+
+                    <!-- Intervention associée -->
+                    <div class="section" style="margin-bottom: 30px;">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3;  padding-bottom: 5px;">III-Intervention a la quelle cette decision est relier</h3>
+                        <p>
+                            <strong>Intervention :</strong>
+                            <t t-esc="doc.intervention_id.name or 'Non spécifiée'" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>Date :</strong>
+                            <t t-esc="doc.intervention_id.date or 'Non spécifiée'" style="margin-left: 6px;"/>
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

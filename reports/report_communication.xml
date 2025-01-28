@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<odoo>
+    <!-- Report Action -->
+    <record id="report_communication_action" model="ir.actions.report">
+        <field name="name">Rapport des Communications</field>
+        <field name="model">reclamationpgi.communication</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_communication_template</field>
+    </record>
+
+    <!-- Report Template -->
+    <report 
+        id="report_communication_template" 
+        model="reclamationpgi.communication" 
+        string="Rapport des Communications" 
+        report_type="qweb-pdf" 
+        name="reclamationpgi.report_communication_template" 
+        file="reclamationpgi.report_communication_template" 
+    />
+
+    <!-- Template QWeb -->
+    <template id="report_communication_template">
+        <t t-call="web.html_container">
+            
+                <div class="page">
+                    <h2 style="text-align: center; color: #0056b3; font-family: 'Roboto', Arial, sans-serif;">
+                        Rapport des Communications
+                    </h2>
+                    <p style="text-align: center;">
+                        Genere le : <t t-esc="time.strftime('%d/%m/%Y')"/>
+                    </p>
+
+                    <!-- Détails des communications -->
+                    <t t-foreach="docs" t-as="doc">
+                        <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px; margin-top: 20px;">
+                            I-Informations sur la Communication
+                        </h3>
+                        <table style="width: 100%; margin-bottom: 20px;">
+                            <tr>
+                                <td style="width: 30%;"><strong>Date :</strong></td>
+                                <td><t t-esc="doc.date or 'Non specifiee'"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Motif :</strong></td>
+                                <td><t t-esc="dict(doc._fields['motif'].selection).get(doc.motif, 'Non specifie')"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Type :</strong></td>
+                                <td><t t-esc="dict(doc._fields['type_communication'].selection).get(doc.type_communication, 'Non specifie')"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contenu :</strong></td>
+                                <td><t t-esc="doc.contenu or 'Non specifie'"/></td>
+                            </tr>
+                        </table>
+
+                        <!-- Informations sur la Réclamation -->
+                        <h4 style="border-bottom: 1px solid #0056b3; color: #0056b3; padding-bottom: 5px;">
+                            II-Informations sur la Reclamation
+                        </h4>
+                        <t t-if="doc.reclamation_id">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 30%;"><strong>Objet :</strong></td>
+                                    <td><t t-esc="doc.reclamation_id.objet or 'Non specifie'"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Description :</strong></td>
+                                    <td><t t-esc="doc.reclamation_id.description or 'Non specifiee'"/></td>
+                                </tr>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p><strong>Reclamation :</strong> Non specifiee</p>
+                        </t>
+
+                        <!-- Informations sur l'Agent -->
+                        <h4 style="border-bottom: 1px solid #0056b3; color: #0056b3; padding-bottom: 5px;">
+                            III-Informations de l'Agent
+                        </h4>
+                        <t t-if="doc.agent_id">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 30%;"><strong>Nom :</strong></td>
+                                    <td><t t-esc="doc.agent_id.name or 'Non specifie'"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email :</strong></td>
+                                    <td><t t-esc="doc.agent_id.work_email or 'Non specifie'"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Telephone :</strong></td>
+                                    <td><t t-esc="doc.agent_id.mobile_phone or 'Non specifie'"/></td>
+                                </tr>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p><strong>Agent :</strong> Non specifie</p>
+                        </t>
+
+                        <!-- Ligne de séparation -->
+                        <hr style="border: 1px solid black; margin-top: 20px; margin-bottom: 20px;"/>
+                    </t>
+                </div>
+            
+        </t>
+    </template>
+</odoo>
