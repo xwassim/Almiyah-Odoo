@@ -74,29 +74,33 @@
                             <p><strong>Reclamation :</strong> Non specifiee</p>
                         </t>
 
-                        <!-- Informations sur l'Agent -->
+                        <!-- Informations sur le réclamant  -->
                         <h4 style="border-bottom: 1px solid #0056b3; color: #0056b3; padding-bottom: 5px;">
-                            III-Informations de l'Agent
+                            III-Informations sur le reclamant 
                         </h4>
-                        <t t-if="doc.agent_id">
+                        <t t-if="doc.reclamant_id">
                             <table style="width: 100%;">
                                 <tr>
+                                    <td style="width: 30%;"><strong>Prenom :</strong></td>
+                                    <td><t t-esc="doc.reclamant_id.reclamant_fname or 'Non specifie'"/></td>
+                                </tr>
+                                <tr>
                                     <td style="width: 30%;"><strong>Nom :</strong></td>
-                                    <td><t t-esc="doc.agent_id.name or 'Non specifie'"/></td>
+                                    <td><t t-esc="doc.reclamant_id.reclamant_lname or 'Non specifie'"/></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Email :</strong></td>
-                                    <td><t t-esc="doc.agent_id.work_email or 'Non specifie'"/></td>
+                                    <td><t t-esc="doc.reclamant_id.reclamant_email or 'Non specifie'"/></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Telephone :</strong></td>
-                                    <td><t t-esc="doc.agent_id.mobile_phone or 'Non specifie'"/></td>
+                                    <td><t t-esc="doc.reclamant_id.reclamant_phone or 'Non specifie'"/></td>
                                 </tr>
                             </table>
                         </t>
                         <t t-else="">
-                            <p><strong>Agent :</strong> Non specifie</p>
-                        </t>
+                            <p><strong>Reclamant :</strong> Non specifie</p>
+                        </t> 
 
                         <!-- Ligne de séparation -->
                         <hr style="border: 1px solid black; margin-top: 20px; margin-bottom: 20px;"/>

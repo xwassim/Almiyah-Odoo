@@ -12,7 +12,6 @@
                         <field name="date" required="1"/>
                         <field name="reclamation_id" required="1"/>
                         <field name="reclamant_id" required="1"/>
-                        
                         <field name="type_communication" required="1"/>
                         <!-- Champs pour les Emails -->
                         <field name="reclamantmail" invisible="type_communication != 'mail'" />
@@ -39,6 +38,7 @@
                 <field name="date"/>
                 <field name="motif"/>
                 <field name="reclamation_id"/>
+                
             </tree>
         </field>
     </record>

@@ -104,6 +104,8 @@ class Reclamant(models.Model):
     company_sector = fields.Char(string="Secteur d'Activité", states={'readonly': [('type', '!=', 'enterprise')]})
     # added by wassim (champ raison social)
     company_code = fields.Char(string="Raison social",states={'readonly': [('type', '!=', 'enterprise')]})
+    
+    survey_id = fields.Many2one('survey.survey', string="Survey")
 
 
 class Equipe(models.Model):
@@ -176,14 +178,15 @@ class Communication(models.Model):
     ], string="Type de Communication", required=True)
     date = fields.Datetime(string="Date", required=True, default=fields.Datetime.now)
     motif = fields.Selection([
-        ('infos complémentaires', 'Demande d’informations complémentaires'),
-        ('response', 'Réponse au réclamant'),
-        ('decision', 'Information de la décision') , 
+        ('infos complementaires', 'Demande d informations complementaires'),
+        ('response', 'Reponse au reclamant'),
+        ('decision', 'Information de la decision') , 
         ('pieces jointes', 'Manque de pieces justificatives ou erreur') , 
       
     ], string="Motif de la Communication", required=True)
     objet = fields.Text(string="Objet de la Communication", required=True)
     contenu = fields.Text(string="Contenu / Description", required=True)
+
     
     
      # Relations
