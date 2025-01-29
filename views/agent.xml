@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vue Formulaire Agent -->
+    <record model="ir.ui.view" id="agent_form_view">
+        <field name="name">agent.form</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <form string="Agent">
+                <sheet>
+                    <group string="Informations de l'Agent">
+                        <field name="name" required="1"/>
+                        <field name="agency_id"/>
+                        <field name="role" required="1"/>
+                        <field name="department"/>
+                    </group>
+                    <group string="Détails">
+                        <field name="work_email"/>
+                        <field name="work_phone"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Agent -->
+    <record model="ir.ui.view" id="agent_tree_view">
+        <field name="name">agent.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Agents">
+                <field name="name"/>
+                <field name="role"/>
+                <field name="agency_id"/>
+                <field name="work_email"/>
+                <field name="work_phone"/>
+                <field name="department"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="agent_kanban_view">
+        <field name="name">agent.kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_view">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_record">
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <t t-esc="record.name.value or ''"/>
+                                </strong>
+                                <div>
+                                    <t t-esc="record.work_email.value or ''"/>
+                                </div>
+                                <div>
+                                    <t t-esc="record.work_phone.value or ''"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- Action Liste Agent -->
+    <record model="ir.actions.act_window" id="agent_list_action">
+        <field name="name">Agents</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>

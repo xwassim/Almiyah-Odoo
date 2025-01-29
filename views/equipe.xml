@@ -1,0 +1,79 @@
+<odoo>
+    <record id="view_equipe_tree" model="ir.ui.view">
+        <field name="name">equipe.tree</field>
+        <field name="model">reclamationpgi.equipe</field>
+        <field name="arch" type="xml">
+            <tree string="Équipes">
+                <field name="name"/>
+                <field name="chef_id"/>
+                <field name="members_ids" widget="many2many_tags"/>
+                <field name="reclamations_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_equipe_form" model="ir.ui.view">
+        <field name="name">equipe.form</field>
+        <field name="model">reclamationpgi.equipe</field>
+        <field name="arch" type="xml">
+            <form string="Équipe">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="chef_id"/>
+                        <field name="members_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Réclamations Assignées">
+                        <field name="reclamations_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View for Équipes -->
+    <record id="view_equipe_kanban" model="ir.ui.view">
+        <field name="name">equipe.kanban</field>
+        <field name="model">reclamationpgi.equipe</field>
+        <field name="arch" type="xml">
+            <kanban string="Équipes">
+                <templates>
+                    <!-- Card Template -->
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <!-- Card Header -->
+                            <div class="o_kanban_card_header" style="padding: 16px; background-color: #f5f5f5; border-radius: 8px 8px 0 0;">
+                                <strong style="font-size: 18px;">
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="o_kanban_card_body" style="padding: 16px;">
+                                <div style="margin-bottom: 8px;">
+                                    <strong>Chef:</strong>
+                                    <field name="chef_id" style="margin-left: 5px;"/>
+                                </div>
+                                <div style="margin-bottom: 25px;">
+                                    <strong>Membres:</strong>
+                                    <field name="members_ids" widget="many2many_tags"/>
+                                </div>
+                                <div>
+                                    <strong style="margin-bottom: 10px;">Réclamations:</strong>
+                                    <field name="reclamations_ids" widget="many2many_tags"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action pour Afficher les Équipes -->
+    <record id="action_equipe" model="ir.actions.act_window">
+        <field name="name">Équipes</field>
+        <field name="res_model">reclamationpgi.equipe</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>

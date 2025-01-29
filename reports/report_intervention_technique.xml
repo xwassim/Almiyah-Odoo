@@ -1,0 +1,97 @@
+<odoo>
+    <!-- Définition du rapport pour le modèle Intervention -->
+    <record id="report_intervention" model="ir.actions.report">
+        <field name="name">Rapport d'intervention</field>
+        <field name="model">reclamationpgi.intervention</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_intervention_technique</field>
+        <field name="binding_model_id" ref="reclamationpgi.model_reclamationpgi_intervention"/>
+        <field name="binding_type">report</field>
+    </record>
+    <!-- Définition du rapport -->
+    <report id="intervention_technique_report" model="reclamationpgi.intervention" string="Intervention Technique" report_type="qweb-pdf" name="reclamationpgi.report_intervention_technique" file="reclamationpgi.report_intervention_technique" attachment_use="False"/>
+
+    <!-- Template pour le rapport Intervention Technique -->
+    <template id="report_intervention_technique">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+
+                <div class="page">
+                    <h2 style="color: #0056b3; text-align:center; font-family: 'Roboto', Arial, sans-serif;  margin-bottom: 10px;">Rapport d'intervention </h2>
+
+
+                    <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;">I-Details de la reclamation </h3>
+                    <div style="margin-bottom: 20px;">
+                        <p>
+                            <strong>Objet de la Reclamation :</strong>
+                            <t t-esc="doc.reclamation_id.objet" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>Reclamation emise le :</strong>
+                            <t t-esc="doc.reclamation_id.date" style="margin-left: 6px;"/>
+                        </p>
+                    </div>
+
+
+
+                    <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;">II-Details de l'interventions </h3>
+                    <div style="margin-bottom: 20px;">
+                        <p>
+                            <strong>Nom de l'intervention :</strong>
+                            <t t-esc="doc.name" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>Date d'intervention :</strong>
+                            <t t-esc="doc.date" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>Equipe d'intervention :</strong>
+                            <t t-esc="doc.equipe_id.name" style="margin-left: 6px;"/>
+                        </p>
+                        <p>
+                            <strong>Chef de l'equipe :</strong>
+                            <t t-esc="doc.equipe_id.chef_id.name" style="margin-left: 6px;"/>
+                        </p>
+                    </div>
+
+                    <p style="border-top: 2px solid #ddd; padding-top: 10px;"/>
+
+                    <!-- Déplacements et actions -->
+                    <h3 style="margin-top: 20px; color: #0056b3; padding-bottom: 5px;">III-Deplacements </h3>
+                    <t t-if="doc.deplacements_ids">
+                        <table class="table" style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                            <thead style="background-color: #f2f2f2;">
+                                <tr>
+                                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Lieu</th>
+                                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Actions </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.deplacements_ids" t-as="deplacement">
+                                    <tr>
+                                        <td style="border: 1px solid #ddd; padding: 8px;">
+                                            <t t-esc="deplacement.lieu"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px;">
+                                            <t t-esc="deplacement.actions"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-if="not doc.deplacements_ids">
+                        <p>Aucun deplacement pour cette intervention.</p>
+                    </t>
+
+                    <!-- Actions réalisées -->
+                    <h3 style=" margin-top: 20px; border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;">IV-Actions Globales pour l'intervent :</h3>
+                    <p>
+                        <t t-esc="doc.actions_realisees"/>
+                    </p>
+                </div>
+            </t>
+        </t>
+
+    </template>
+</odoo>

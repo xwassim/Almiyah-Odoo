@@ -1,0 +1,96 @@
+<odoo>
+    <!-- Vue Formulaire Communication -->
+    <record model="ir.ui.view" id="communication_form_view">
+        <field name="name">communication.form</field>
+        <field name="model">reclamationpgi.communication</field>
+        <field name="arch" type="xml">
+            <form string="Communication">
+                <sheet>
+                    <group>
+                   
+                        <field name="motif" required="1"/>
+                        <field name="date" required="1"/>
+                        <field name="reclamation_id" required="1"/>
+                        <field name="reclamant_id" required="1"/>
+                        <field name="type_communication" required="1"/>
+                        <!-- Champs pour les Emails -->
+                        <field name="reclamantmail" invisible="type_communication != 'mail'" />
+                        <!-- Champs pour les SMS -->
+                        <field name="reclamantTel" invisible="type_communication == 'mail'" />
+
+                        <field name="objet" required="1"/>
+                        <field name="contenu" required="1"/>
+                    </group>
+                    
+                   
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Liste Communication -->
+    <record model="ir.ui.view" id="communication_tree_view">
+        <field name="name">communication.tree</field>
+        <field name="model">reclamationpgi.communication</field>
+        <field name="arch" type="xml">
+            <tree string="Communications">
+                <field name="type_communication"/>
+                <field name="date"/>
+                <field name="motif"/>
+                <field name="reclamation_id"/>
+                
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="communication_kanban_view" model="ir.ui.view">
+    <field name="name">communication.kanban</field>
+    <field name="model">reclamationpgi.communication</field>
+    <field name="arch" type="xml">
+        <kanban string="Communications">
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click o_kanban_card" style="border: 1px solid #ddd; border-radius: 8px; margin: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                        <!-- Card Header -->
+                        <div class="o_kanban_card_header" style="background-color: #f7f9fc; padding: 12px; border-bottom: 1px solid #ddd; border-radius: 8px 8px 0 0;">
+                            <strong style="font-size: 16px; color: #333;">
+                                <field name="objet"/>
+                            </strong>
+                        </div>
+                        
+                        <!-- Card Body -->
+                        <div class="o_kanban_card_body" style="padding: 12px;">
+                            <div style="margin-bottom: 8px;">
+                                <strong>Motif:</strong>
+                                <span><field name="motif"/></span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Date:</strong>
+                                <span><field name="date"/></span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Réclamant:</strong>
+                                <span><field name="reclamant_id"/></span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Type:</strong>
+                                <span><field name="type_communication"/></span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+
+    <!-- Action Liste Communication -->
+    <record model="ir.actions.act_window" id="communication_list_action">
+        <field name="name">Communications</field>
+        <field name="res_model">reclamationpgi.communication</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+</odoo>

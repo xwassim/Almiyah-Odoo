@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="report_reclamationpgi" model="ir.actions.report">
+        <field name="name">Rapport des Reclamations</field>
+        <field name="model">reclamationpgi.reclamation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reclamationpgi.report_reclamation</field>
+        <field name="binding_model_id" ref="reclamationpgi.model_reclamationpgi_reclamation"/>
+        <field name="binding_type">report</field>
+    </record>
+    <report id="report_reclamationpgi" model="reclamationpgi.reclamation" string="Liste des reclamations" report_type="qweb-pdf" file="reclamationpgi.report_reclamation" name="reclamationpgi.report_reclamation" />
+    <!-- Template du rapport -->
+    <template id="report_reclamation">
+        <t t-call="web.html_container">
+            <!-- Titre du rapport -->
+            <h2 style="text-align: center; color: #0056b3; font-family: 'Roboto', Arial, sans-serif;">Rapport des Reclamations </h2>
+            <p style="text-align: center;">Genere le : <t t-esc="time.strftime('%d/%m/%Y')"/>
+            </p>
+
+            <!-- Boucle pour afficher toutes les réclamations en continu -->
+            <t t-foreach="docs" t-as="doc">
+                <!-- Titre de chaque réclamation -->
+                <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;margin-top: 20px;">I-Informations sur la Reclamation </h3>
+
+                <!-- Tableau des détails de la réclamation -->
+                <table style="width: 100%; margin-bottom: 20px;">
+                    <tr>
+                        <td style="width: 30%;">
+                            <strong>Date de Reclamation :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="doc.date or 'Non specifiee'" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Objet :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="doc.objet or 'Non specifie'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Description :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="doc.description or 'Non specifiee'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Agence :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="doc.agency_id.name or 'Non specifie'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Origine :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="dict(doc._fields['origin'].selection).get(doc.origin, 'Non specifiee')"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Provenance :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="dict(doc._fields['provenance'].selection).get(doc.provenance, 'Non specifie')"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Statut :</strong>
+                        </td>
+                        <td>
+                            <t t-esc="dict(doc._fields['status'].selection).get(doc.status, 'Non specifie')"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Informations du Réclamant -->
+                <h3 style="border-bottom: 2px solid #0056b3; color: #0056b3; padding-bottom: 5px;">II-Informations du Reclamant</h3>
+                <t t-if="doc.reclamant_id">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 30%;">
+                                <strong>Type :</strong>
+                            </td>
+                            <td>
+                                <t t-esc="doc.reclamant_id.type or 'Non specifie'"/>
+                            </td>
+                        </tr>
+                        <t t-if="doc.reclamant_id.type == 'individual'">
+                            <tr>
+                                <td>
+                                    <strong>Prenom :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.reclamant_fname or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Nom :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.reclamant_lname or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Email :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.reclamant_email or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Telephone :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.reclamant_phone or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-elif="doc.reclamant_id.type == 'enterprise'">
+                            <tr>
+                                <td>
+                                    <strong>Nom de l'Entreprise :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.company_name or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Email :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.company_email or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Telephone :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.company_phone or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Secteur d'Activite :</strong>
+                                </td>
+                                <td>
+                                    <t t-esc="doc.reclamant_id.company_sector or 'Non specifie'"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>
+                        <strong>Reclamant :</strong> Non specifie</p>
+                </t>
+
+                <!-- Informations de l'Agent Assigné -->
+                <h4 style="border-bottom: 1px solid #0056b3; color: #0056b3; padding-bottom: 5px; margin-top: 20px;">III-Informations de l'Agent Assigne</h4>
+                <t t-if="doc.assigned_agent">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 30%;">
+                                <strong>Nom :</strong>
+                            </td>
+                            <td>
+                                <t t-esc="doc.assigned_agent.name or 'Non specifie'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Rôle :</strong>
+                            </td>
+                            <td>
+                                <t t-esc="dict(doc.assigned_agent._fields['role'].selection).get(doc.assigned_agent.role, 'Non specifie')"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Departement :</strong>
+                            </td>
+                            <td>
+                                <t t-esc="dict(doc.assigned_agent._fields['department'].selection).get(doc.assigned_agent.department, 'Non specifie')"/>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>
+                        <strong>Agent Assigne :</strong> Non assigne</p>
+                </t>
+
+                <!-- Ligne de séparation entre les réclamations -->
+                <hr style="border: 3px solid black; margin-top: 20px; margin-bottom: 20px;"/>
+            </t>
+        </t>
+    </template>
+</odoo>
